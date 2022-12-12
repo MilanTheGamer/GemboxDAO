@@ -40,54 +40,16 @@ contract GemboxDAO {
   //--------- FUNCTIONS ------------------------------------------------------------------
 
   // Create Lottery Pool
-  function createPool(
-    uint _poolLimit,
-    uint _timeLimit,
-    uint _lotteyPrice
-  ) public onlyOwner returns (LotteryPoolStruct memory poolInfo) {
-      uint poolId = lastLotteryPoolId + 1;
-      LotteryTicketStruct[] memory initialLotteryList;
-      LotteryPoolStruct memory lotteryPool = LotteryPoolStruct({
-        poolId: poolId,
-        price: _lotteyPrice,
-        timeDuration: _timeLimit,
-        poolLimit: _poolLimit,
-        lotteryList: initialLotteryList,
-        status: LotteryStatus.Active
-      });
-      activePoolList.push(lotteryPool);
-      return lotteryPool;
+  function createPool() public onlyOwner {
   }
 
   //To get the array of active pools 
-  function getActivePoolList() public view returns (LotteryPoolStruct[] memory) {
-    LotteryPoolStruct[] memory pools = new LotteryPoolStruct[](activePoolList.length);
-    for (uint i = 0; i < activePoolList.length; i++) {
-      LotteryPoolStruct memory pool = activePoolList[i];
-      pools[i] = pool;
-    }
-    return pools;
+  function getActivePoolList() public view  {
   }
   
   // Join Lottery Pool
-  function joinPool(uint _poolId) view public returns (LotteryTicketStruct memory) {
-    LotteryPoolStruct memory selectedPool;
-    for (uint i = 0; i < activePoolList.length; i++){
-      if (activePoolList[i].poolId == _poolId){
-        selectedPool = activePoolList[i];
-        break;
-      }
-    }
-    LotteryTicketStruct memory ticket = LotteryTicketStruct({
-      ticketNumber: (selectedPool.lotteryList.length + 1),
-      poolId: selectedPool.poolId,
-      ticketHolder: msg.sender
-    });
-
-    // LotteryTicketStruct[] memory lotteryList = selectedPool.lotteryList;
-    // lotteyList.push(ticket);
-    // selectedPool.lotteryList.push(ticket);
-    return ticket;
+  function joinPool() view public {
+    
   }
 
   // Claim Winning Prize
