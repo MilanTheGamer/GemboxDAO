@@ -8,10 +8,9 @@ contract GemboxDAO {
 
   //-------- GLOBAL VARIABLES ----------------------------------------------------------
 
-  address private owner;     // Owner wallet address
-  string public appName;     // Name of App
-  uint public lastUpdated;   // Last Contract Update
-  uint private lastLotteryPoolId;  // ID of the last lottery pool
+  string public appName;  // Name of App
+
+  address private owner;  // Owner wallet address
   LotteryPoolStruct[] private activePoolList; // List of all the active lottery list 
 
 
@@ -23,21 +22,23 @@ contract GemboxDAO {
   //--------- MODIFIERS ------------------------------------------------------------------
 
   modifier onlyOwner() {    // Modifier for restricting access only owner allowed functions
-      require(msg.sender == owner, "Unauthorised");
-      _;
+    require(msg.sender == owner, "Unauthorised");
+    _;
   }
 
 
   //--------- CONSTRUCTOR ------------------------------------------------------------------
+
   constructor(string memory _app_name){
     owner =  msg.sender;
     appName = _app_name;
-    lastUpdated = block.timestamp;
-    lastLotteryPoolId = 0;
   }
 
+  //--------- PRIVATE FUNCTIONS ------------------------------------------------------------------
+
+
   
-  //--------- FUNCTIONS ------------------------------------------------------------------
+  //--------- PUBLIC FUNCTIONS ------------------------------------------------------------------
 
   // Create Lottery Pool
   function createPool() public onlyOwner {

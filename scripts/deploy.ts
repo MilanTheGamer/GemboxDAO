@@ -1,12 +1,12 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const Lock = await ethers.getContractFactory("GemboxDAO");
-  const lock = await Lock.deploy("GEMBOX");
+  const Gembox = await ethers.getContractFactory("GemboxDAO");
+  const gembox = await Gembox.deploy("GEMBOX");
 
-  await lock.deployed();
+  await gembox.deployed();
 
-  console.log(`Deployed to ${lock.address}`);
+  console.log(`Deployed to ${gembox.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
