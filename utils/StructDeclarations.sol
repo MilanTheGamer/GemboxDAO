@@ -10,11 +10,11 @@ struct LotteryTicketStruct{
 }
 
 struct LotteryPoolStruct{       // Lotter info object structure
-  uint poolId;
+  bytes32 poolId;
+  address creatorAddress;
   uint price;
   uint timeDuration;
   uint poolLimit;
-  LotteryTicketStruct[] lotteryList;
   LotteryStatus status;
 }
 

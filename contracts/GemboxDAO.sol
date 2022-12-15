@@ -9,14 +9,12 @@ contract GemboxDAO {
   //-------- GLOBAL VARIABLES ----------------------------------------------------------
 
   string public appName;  // Name of App
-
   address private owner;  // Owner wallet address
-  LotteryPoolStruct[] private activePoolList; // List of all the active lottery list 
-
+  bytes32[] private activePools; // Active Lottery Pools
 
   //--------- MAPPINGS ------------------------------------------------------------------
 
-  mapping (uint => WinnerStruct) public winners;  // Winners List corresponding to the lotteryId
+  mapping (bytes32 => LotteryPoolStruct) private LotteryPool;
   
 
   //--------- MODIFIERS ------------------------------------------------------------------
@@ -36,12 +34,20 @@ contract GemboxDAO {
 
   //--------- PRIVATE FUNCTIONS ------------------------------------------------------------------
 
-
+  function _generatePoolId(uint memory _timeDuration, address _creatorAddress) private view returns (bytes32) {
+    return keccak256(abi.encodePacked(_timeDuration, _creatorAddress, block.timestamp));
+  }
   
   //--------- PUBLIC FUNCTIONS ------------------------------------------------------------------
 
   // Create Lottery Pool
-  function createPool() public onlyOwner {
+  function createPool(
+    address _creatorAddress,
+    uint _price,
+    uint _timeDuration,
+    uint _poolLimit
+  ) public onlyOwner {
+    bytes32 id = _generatePoolId(_timeDuration,_creatorAddress);
   }
 
   //To get the array of active pools 
