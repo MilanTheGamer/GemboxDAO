@@ -34,7 +34,7 @@ contract GemboxDAO {
 
   //--------- PRIVATE FUNCTIONS ------------------------------------------------------------------
 
-  function _generatePoolId(uint memory _timeDuration, address _creatorAddress) private view returns (bytes32) {
+  function _generatePoolId(uint _timeDuration, address _creatorAddress) private view returns (bytes32) {
     return keccak256(abi.encodePacked(_timeDuration, _creatorAddress, block.timestamp));
   }
   
