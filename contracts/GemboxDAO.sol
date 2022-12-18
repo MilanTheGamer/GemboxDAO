@@ -42,8 +42,8 @@ contract GemboxDAO {
     return keccak256(abi.encodePacked(_timeDuration, _creatorAddress, block.timestamp));
   }
 
-  function _generateTicketId(bytes32 poolId, address _creatorAddress) private view returns (bytes32) {
-    return keccak256(abi.encodePacked(poolId, _creatorAddress, block.timestamp));
+  function _generateTicketId(bytes32 _poolId, address _creatorAddress) private view returns (bytes32) {
+    return keccak256(abi.encodePacked(_poolId, _creatorAddress, block.timestamp));
   }
   
   //--------- PUBLIC FUNCTIONS ------------------------------------------------------------------
@@ -54,12 +54,16 @@ contract GemboxDAO {
     uint _price,
     uint _timeDuration,
     uint _poolLimit
-  ) public onlyOwner {
+  ) public returns (LotteryPoolStruct memory)  {
     bytes32 id = _generatePoolId(_timeDuration,_creatorAddress);
+    LotteryPool[id] = LotteryPoolStruct(id, _creatorAddress, _price, _timeDuration, _poolLimit, LotteryStatus.Active);
+    activePools.push(id);
+    return LotteryPool[id];
   }
 
   //To get the array of active pools 
-  function getActivePoolList() public view  {
+  function getActivePoolList() public view returns (bytes32[] memory)  {
+    return activePools;
   }
   
   // Join Lottery Pool
