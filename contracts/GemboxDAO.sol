@@ -16,7 +16,9 @@ contract GemboxDAO {
 
   //--------- MAPPINGS ------------------------------------------------------------------
 
-  mapping (bytes32 => LotteryPoolStruct) private LotteryPool;
+  mapping (bytes32 => LotteryPoolStruct) private LotteryPool; // Mapping containing every Lottery Pool created
+  mapping (bytes32 => bytes32[]) private TicketsInPool; // Mapping containing every ticket in a Pool
+  mapping (address => bytes32[]) private UserTicketHoldings; // Mapping containing tickets user hold
   
 
   //--------- MODIFIERS ------------------------------------------------------------------
@@ -38,6 +40,10 @@ contract GemboxDAO {
 
   function _generatePoolId(uint _timeDuration, address _creatorAddress) private view returns (bytes32) {
     return keccak256(abi.encodePacked(_timeDuration, _creatorAddress, block.timestamp));
+  }
+
+  function _generateTicketId(bytes32 poolId, address _creatorAddress) private view returns (bytes32) {
+    return keccak256(abi.encodePacked(poolId, _creatorAddress, block.timestamp));
   }
   
   //--------- PUBLIC FUNCTIONS ------------------------------------------------------------------

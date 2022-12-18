@@ -4,8 +4,8 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./EnumDeclarations.sol";
 
 struct LotteryTicketStruct{
-  uint ticketNumber;
-  uint poolId;
+  bytes32 ticketId;
+  bytes32 poolId;
   address ticketHolder;
 }
 
