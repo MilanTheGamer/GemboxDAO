@@ -17,6 +17,7 @@ contract GemboxDAO {
   //--------- MAPPINGS ------------------------------------------------------------------
 
   mapping (bytes32 => LotteryPoolStruct) private LotteryPool; // Mapping containing every Lottery Pool created
+  mapping (bytes32 => LotteryTicketStruct) private LotteryTicket; // Mapping containing every Lottery Tickets created
   mapping (bytes32 => bytes32[]) private TicketsInPool; // Mapping containing every ticket in a Pool
   mapping (address => bytes32[]) private UserTicketHoldings; // Mapping containing tickets user hold
   
@@ -35,6 +36,7 @@ contract GemboxDAO {
     owner =  msg.sender;
     appName = _app_name;
   }
+  
 
   //--------- PRIVATE FUNCTIONS ------------------------------------------------------------------
 
@@ -79,6 +81,11 @@ contract GemboxDAO {
   // Choose Winner
   function chooseWinner() public {
     
+  }
+
+  // To get all the tickets user holds
+  function getUserTickets(address _userAddress) public view returns (bytes32[] memory) {
+    return UserTicketHoldings[_userAddress];
   }
 
 }
