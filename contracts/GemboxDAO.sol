@@ -20,6 +20,12 @@ contract GemboxDAO {
   mapping (bytes32 => LotteryTicketStruct) private LotteryTicket; // Mapping containing every Lottery Tickets created
   mapping (bytes32 => bytes32[]) private TicketsInPool; // Mapping containing every ticket in a Pool
   mapping (address => bytes32[]) private UserTicketHoldings; // Mapping containing tickets user hold
+
+
+  //--------- EVENTS ------------------------------------------------------------------
+
+  event PoolCreated(address creatorID, bytes32 poolId, LotteryPoolStruct pool);
+  event WinnerAnnounced(bytes32 poolId, address winner);
   
 
   //--------- MODIFIERS ------------------------------------------------------------------
@@ -60,12 +66,8 @@ contract GemboxDAO {
     bytes32 id = _generatePoolId(_timeDuration,_creatorAddress);
     LotteryPool[id] = LotteryPoolStruct(id, _creatorAddress, _price, _timeDuration, _poolLimit, LotteryStatus.Active);
     activePools.push(id);
+    emit PoolCreated(_creatorAddress, id, LotteryPool[id]);
     return LotteryPool[id];
-  }
-
-  //To get the array of active pools 
-  function getActivePoolList() public view returns (bytes32[] memory)  {
-    return activePools;
   }
   
   // Join Lottery Pool
@@ -81,6 +83,11 @@ contract GemboxDAO {
   // Choose Winner
   function chooseWinner() public {
     
+  }
+
+  //To get the array of active pools 
+  function getActivePoolList() public view returns (bytes32[] memory)  {
+    return activePools;
   }
 
   // To get all the tickets user holds
