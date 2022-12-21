@@ -63,16 +63,20 @@ contract GemboxDAO {
     uint _timeDuration,
     uint _poolLimit
   ) public returns (LotteryPoolStruct memory)  {
-    bytes32 id = _generatePoolId(_timeDuration,_creatorAddress);
-    LotteryPool[id] = LotteryPoolStruct(id, _creatorAddress, _price, _timeDuration, _poolLimit, LotteryStatus.Active);
-    activePools.push(id);
-    emit PoolCreated(_creatorAddress, id, LotteryPool[id]);
-    return LotteryPool[id];
+    bytes32 poolId = _generatePoolId(_timeDuration,_creatorAddress);
+    LotteryPool[poolId] = LotteryPoolStruct(poolId, _creatorAddress, _price, _timeDuration, _poolLimit, LotteryStatus.Active);
+    activePools.push(poolId);
+    emit PoolCreated(_creatorAddress, poolId, LotteryPool[poolId]);
+    return LotteryPool[poolId];
   }
   
   // Join Lottery Pool
-  function joinPool() view public {
-    
+  function joinPool(bytes32 _poolId) public returns (LotteryTicketStruct memory) {
+    bytes32 ticketId = _generateTicketId(_poolId, msg.sender);
+    LotteryTicket[ticketId] = LotteryTicketStruct(ticketId,_poolId,msg.sender);
+    TicketsInPool[_poolId].push(ticketId);
+    UserTicketHoldings[msg.sender].push(ticketId);
+    return LotteryTicket[ticketId];
   }
 
   // Claim Winning Prize
