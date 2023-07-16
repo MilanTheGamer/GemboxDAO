@@ -15,6 +15,6 @@ describe("Token contract", function () {
     const [owner] = await ethers.getSigners();
     const response = await contract.createPool(owner.address, 10, 1220000, 100);
     const activePools = await contract.getActivePoolList();
-    console.log(activePools);
+    console.log("Active pools:", activePools);
   });
 });
