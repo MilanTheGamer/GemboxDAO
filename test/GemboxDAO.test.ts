@@ -14,8 +14,18 @@ describe("GemBox contract", function () {
   it("Should Create Pool", async function () {
     const [owner] = await ethers.getSigners();
     const response = await contract.createPool(owner.address, 10, 1220000, 100);
-    const contractResponse = await response.wait();
     const activePools = await contract.getActivePoolList();
-    console.log({ contractResponse, activePools });
+  });
+
+  it("Should Join a Pool", async function () {
+    const [owner] = await ethers.getSigners();
+    const activePools = await contract.getActivePoolList();
+    const poolId = activePools[0];
+    await contract.joinPool(poolId);
+    await contract.joinPool(poolId);
+    const poolTickets = await contract.getUserTickets(owner.address);
+    console.log(poolTickets);
+    // const contractResponse = await response.wait();
+    // console.log({ contractResponse, activePools });
   });
 });

@@ -99,12 +99,17 @@ contract GemboxDAO {
     return LotteryPool[_poolId];
   }
 
+  //To get all tickets in a pool
+  function getTicketsInPool(bytes32 _poolId) public view returns (bytes32[] memory)  {
+    return TicketsInPool[_poolId];
+  }
+
   // To get all the tickets user holds
   function getUserTickets(address _userAddress) public view returns (bytes32[] memory) {
     return UserTicketHoldings[_userAddress];
   }
 
-    //To get pool details
+  //To get pool details
   function getTicketDetails(bytes32 _ticketId) public view returns (LotteryTicketStruct memory)  {
     return LotteryTicket[_ticketId];
   }
